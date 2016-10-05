@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
-
+import { LoginModule } from './login/login.module'
 import { RegisterModule } from './register/register.module';
 import { routing, appRoutingProviders } from './app-routing.module';
 
@@ -19,6 +19,7 @@ import { routing, appRoutingProviders } from './app-routing.module';
     FormsModule,
     HttpModule,
     RegisterModule,
+    LoginModule,
     routing
   ],
   providers: [appRoutingProviders],

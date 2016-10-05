@@ -1,3 +1,31 @@
 <p>
   register works!
 </p>
+
+<form [formGroup]="registerForm">
+
+  <div>
+    <label>Username:</label>
+    <input type="text" formControlName="username">
+    <p
+      *ngIf="registerForm.controls.username.errors ">This field is required!
+    </p>
+  </div>
+
+  <div>
+    <label>Password:</label>
+    <input type="text" formControlName="password">
+    <p *ngIf="registerForm.controls.password.errors">This field is required!</p>
+
+    <label>Confirm Password:</label>
+    <input type="text" formControlName="confirmPassword">
+    <p *ngIf="registerForm.controls.confirmPassword.hasError('notEquivalent')">Password dont match</p>
+  </div>
+
+  <div>
+    <label>Email:</label>
+    <input type="text" formControlName="email">
+    <p *ngIf="registerForm.controls.email.errors">This field is required!</p>
+  </div>
+</form>
+
