@@ -7,9 +7,7 @@
   <div>
     <label>Username:</label>
     <input type="text" formControlName="username">
-    <p
-      *ngIf="registerForm.controls.username.errors ">This field is required!
-    </p>
+    <p *ngIf="registerForm.controls.username.errors ">This field is required!</p>
   </div>
 
   <div>
@@ -19,6 +17,7 @@
 
     <label>Confirm Password:</label>
     <input type="text" formControlName="confirmPassword">
+    <p *ngIf = "registerForm.controls.confirmPassword.errors">This filed is required!</p>
     <p *ngIf="registerForm.controls.confirmPassword.hasError('notEquivalent')">Password dont match</p>
   </div>
 
