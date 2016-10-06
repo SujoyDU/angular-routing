@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms'
+import { User} from './user'
 
 @Component({
   selector: 'app-register',
@@ -7,11 +8,20 @@ import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms'
   styleUrls: ['./register.component.css'],
   providers : [FormBuilder]
 })
+
+
+
 export class RegisterComponent implements OnInit {
 
+  //
+  active:boolean = true;
+  submitted:boolean = false;
+  model:User;
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+      this.model = new User("","","","");
+  }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -33,5 +43,27 @@ export class RegisterComponent implements OnInit {
       }
     }
   }
+
+  onSubmit(value:any) {
+     this.submitted = true;
+     console.log('Reactive Form Data: ')
+     console.log(value);
+     this.model.username = value.username;
+     this.model.password = value.password;
+     this.model.confirmPassword = value.confirmPassword;
+     this.model.email = value.email;
+
+     //console.log(this.model.username,this.model.password,this.model.email);
+  }
+  printVal() {
+    console.log(this.model.username,this.model.password,this.model.email);
+  }
+  newUser(){
+     this.model = new User('','','','');
+     this.registerForm.reset();
+     // this.active = false;
+     // setTimeout(() => this.active = true, 0);
+  }
+
 
 }

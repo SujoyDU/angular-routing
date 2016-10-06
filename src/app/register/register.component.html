@@ -2,29 +2,180 @@
   register works!
 </p>
 
-<form [formGroup]="registerForm">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)">
 
-  <div>
+  <div class="form-group">
     <label>Username:</label>
-    <input type="text" formControlName="username">
+    <input class="form-control" type="text" formControlName="username">
     <p *ngIf="registerForm.controls.username.errors ">This field is required!</p>
   </div>
 
-  <div>
+  <div class="form-group">
     <label>Password:</label>
-    <input type="text" formControlName="password">
+    <input class="form-control" type="text" formControlName="password">
     <p *ngIf="registerForm.controls.password.errors">This field is required!</p>
 
     <label>Confirm Password:</label>
-    <input type="text" formControlName="confirmPassword">
+    <input class="form-control" type="text" formControlName="confirmPassword">
     <p *ngIf = "registerForm.controls.confirmPassword.errors">This filed is required!</p>
     <p *ngIf="registerForm.controls.confirmPassword.hasError('notEquivalent')">Password dont match</p>
   </div>
 
-  <div>
+  <div class="form-group">
     <label>Email:</label>
     <input type="text" formControlName="email">
     <p *ngIf="registerForm.controls.email.errors">This field is required!</p>
   </div>
+
+  <button type="submit" class="btn btn-default" [disabled]="!registerForm.valid" (click) = "printVal()">Sign Up</button>
+  <button type="button" class="btn btn-default" (click) = "registerForm.reset()" >Reset</button>
+  <!--<button type="button" class="btn btn-default" (click)="login()">Log In</button>-->
+
+
 </form>
 
+
+<div *ngIf="submitted" >
+      <h2>You submitted the following:</h2>
+      <div class="row">
+        <div class="col-xs-3">Name</div>
+        <div class="col-xs-9  pull-left">{{ model.username }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Password</div>
+        <div class="col-xs-9 pull-left">{{ model.password }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Email</div>
+        <div class="col-xs-9 pull-left">{{ model.email }}</div>
+      </div>
+      <br>
+      <button class="btn btn-default" (click)="submitted=false">Edit</button>
+</div>
+
+
+
+<!--<div class="jumbotron">-->
+    <!--<h2>Data Driven (Reactive) Form</h2>-->
+    <!--&lt;!&ndash; Right of the bat, we no longer declare a local variable but use the formGroup directive and set it the complexForm object we defined in the constructor. Throughout the form, we will reference the complexForm root object as can be seen in the submitForm function.&ndash;&gt;-->
+    <!--<form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">-->
+      <!--<div class="form-group">-->
+        <!--<label>First Name:</label>-->
+        <!--&lt;!&ndash; Rather than set an ngModel, we use the formControl directive to sync our input to the complexForm object. Notice that we are also setting the attribute we wish the corresponding input to sync with. We no longer need the name attribute, but can optionally add it. &ndash;&gt;-->
+        <!--<input class="form-control" type="text" placeholder="John" [formControl]="complexForm.controls['firstName']">-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label>Last Name</label>-->
+        <!--<input class="form-control" type="text" placeholder="Doe" [formControl]="complexForm.controls['lastName']">-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label>Gender</label>-->
+      <!--</div>-->
+      <!--<div class="radio">-->
+        <!--<label>-->
+          <!--<input type="radio" name="gender" value="Male" [formControl]="complexForm.controls['gender']">-->
+          <!--Male-->
+        <!--</label>-->
+      <!--</div>-->
+      <!--<div class="radio">-->
+        <!--<label>-->
+          <!--&lt;!&ndash; This works the same way for radio and checkboxes as can be seen below &ndash;&gt;-->
+          <!--<input type="radio" name="gender" value="Female" [formControl]="complexForm.controls['gender']">-->
+          <!--Female-->
+        <!--</label>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label>Activities</label>-->
+      <!--</div>-->
+      <!--<label class="checkbox-inline">-->
+        <!--<input type="checkbox" value="hiking" name="hiking" [formControl]="complexForm.controls['hiking']"> Hiking-->
+      <!--</label>-->
+      <!--<label class="checkbox-inline">-->
+        <!--<input type="checkbox" value="swimming" name="swimming" [formControl]="complexForm.controls['swimming']"> Swimming-->
+      <!--</label>-->
+      <!--<label class="checkbox-inline">-->
+        <!--<input type="checkbox" value="running" name="running" [formControl]="complexForm.controls['running']"> Running-->
+      <!--</label>-->
+      <!--<div class="form-group">-->
+        <!--<button type="submit" class="btn btn-default">Submit</button>-->
+      <!--</div>-->
+    <!--</form>-->
+  <!--</div>-->
+
+
+
+<!--<div class="container" style="width:300px;margin:20 auto">-->
+    <!--&lt;!&ndash;<h1>Registration</h1>&ndash;&gt;-->
+    <!--<form *ngIf="active" (ngSubmit)="onSubmit()" #registrationForm="ngForm">-->
+
+      <!--&lt;!&ndash;Username Field&ndash;&gt;-->
+      <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="username">Username</label>&ndash;&gt;-->
+        <!--<input type="text" class="form-control" placeholder="User Name" required minlength="3" maxlength="8"-->
+        <!--name="username" [(ngModel)]="model.username" #username = "ngModel">-->
+
+         <!--<div [hidden]="username.valid || username.minlength || username.pristine " class="alert alert-danger">-->
+          <!--Minimum username length is 3!-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+      <!--&lt;!&ndash;Password Field&ndash;&gt;-->
+      <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="password">Passwword</label>&ndash;&gt;-->
+        <!--<input type="password" class="form-control" placeholder="Password" required [(ngModel)]="model.password"-->
+        <!--minlength="8" pattern= "^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$"-->
+        <!--name="password" #password = "ngModel">-->
+        <!--<div [hidden]="password.valid || password.minlength || password.pristine || password.pattern" class="alert alert-danger">-->
+          <!--Password must be minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character-->
+        <!--</div>-->
+     <!--</div>-->
+
+
+      <!--&lt;!&ndash;Confirm Password&ndash;&gt;-->
+      <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="">Confirm password</label>&ndash;&gt;-->
+        <!--<input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword" [(ngModel)]="model.confirmPassword"-->
+         <!--required validateEqual="password" minlength="8" reverse="false" #confirmPassword="ngModel">-->
+        <!--<div [hidden]="confirmPassword.valid ||  (confirmPassword.pristine && !registrationForm.submitted)" class="alert alert-danger">-->
+          <!--Password mismatch-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--&lt;!&ndash;Email Field&ndash;&gt;-->
+      <!--<div class="form-group">-->
+        <!--&lt;!&ndash;<label for="email">Email</label>&ndash;&gt;-->
+        <!--<input type="text" class="form-control" required placeholder="Email"-->
+        <!--pattern = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"-->
+        <!--[(ngModel)]="model.email" name="email" #email = "ngModel">-->
+
+        <!--<div [hidden]="email.valid || email.pristine || email.pattern" class="alert alert-danger">-->
+          <!--Email is required and format should be <i>john@doe.com</i>.-->
+        <!--</div>-->
+       <!--</div>-->
+
+       <!--&lt;!&ndash;Buttons&ndash;&gt;-->
+      <!--<button type="submit" class="btn btn-default" [disabled]="!registrationForm.form.valid" (click)="printVal()" >Sign Up</button>-->
+      <!--<button type="button" class="btn btn-default" (click)="newUser()">Reset</button>-->
+      <!--<button type="button" class="btn btn-default" (click)="login()">Log In</button>-->
+
+    <!--</form>-->
+
+  <!--<div [hidden]="!submitted">-->
+      <!--<h2>You submitted the following:</h2>-->
+      <!--<div class="row">-->
+        <!--<div class="col-xs-3">Name</div>-->
+        <!--<div class="col-xs-9  pull-left">{{ model.username }}</div>-->
+      <!--</div>-->
+      <!--<div class="row">-->
+        <!--<div class="col-xs-3">Password</div>-->
+        <!--<div class="col-xs-9 pull-left">{{ model.password }}</div>-->
+      <!--</div>-->
+      <!--<div class="row">-->
+        <!--<div class="col-xs-3">Email</div>-->
+        <!--<div class="col-xs-9 pull-left">{{ model.email }}</div>-->
+      <!--</div>-->
+      <!--<br>-->
+      <!--<button class="btn btn-default" (click)="submitted=false">Edit</button>-->
+    <!--</div>-->
+<!--</div>-->
