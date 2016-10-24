@@ -18,6 +18,8 @@ export class RegisterComponent implements OnInit {
   submitted:boolean = false;
   model:User;
   registerForm: FormGroup;
+  EMAIL_REGEXP:RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
   constructor(private formBuilder: FormBuilder) {
       this.model = new User("","","","");
@@ -28,7 +30,7 @@ export class RegisterComponent implements OnInit {
       username: ['',Validators.required],
       password: ['',Validators.required],
       confirmPassword: ['',Validators.required],
-      email: ['',Validators.required]
+      email: ['',Validators.pattern('[0-1]+')]
 
     },{validator: this.matchingPasswords('password', 'confirmPassword')});
   }
